@@ -1,0 +1,25 @@
+#!/bin/sh
+
+zenityout=$(zenity --list --radiolist --hide-header --title="Power Menu" --text="What would you like to do?" --column="radio" --column="commands" FALSE "Shutdown" FALSE "Restart" FALSE "Return to TTY" FALSE "Return to Single User Mode" --width="250" --height="218")
+
+echo "$zenityout selected"
+if [ "$zenityout" == "Shutdown" ]
+	then
+		echo "Shutting down..."
+		doas poweroff
+elif [ "$zenityout" == "Restart" ]
+	then
+		echo "Restarting..."
+		doas reboot
+elif [ "$zenityout" == "Return to TTY" ]
+	then
+		echo "Returning to TTY..."
+		doas killall xinit
+elif [ "$zenityout" == "Return to Single User Mode" ]
+	then
+		echo "Returning to Single User Mode"
+		doas shutdown now
+else
+	echo "No option selected."
+fi
+
